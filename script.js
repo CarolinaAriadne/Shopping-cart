@@ -42,7 +42,7 @@ function createProductItemElement({ sku, name, image }) {
 // }
 
 // function cartItemClickListener(event) {
-//   // coloque seu código aqui
+  
 // }
 
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
@@ -94,6 +94,6 @@ window.onload = async () => {
 // linhas 87 : chamei a função append dentro de onload, pois depois de criados todos os elementos no html com as informações que vieram do objeto, tenho que colocar esses elementos como filho da sections class itemns no html. É isso que essas linhas fazem, seleciono meu elemento pai section items, e passo o element (que é o resultado da minha função for each - elementos html criados com suas informações e imagens), como filhos desta section, sendo assim ,após isso, os produtos são mostrados na tela. 
 
 // REQUISTO 2, colocar produtos no carrinho: após requisito 1, linha 89. Chamo minha função listenerButtons, e por meio dela, seleciono todos os meus buttons criados. É necessário que ao clicar nos botões, o produto selecionado seja adicionada ao carrinho.  Na linha  70, cada botão recebe um evento de clique, e quando este clique ocorre, na linha 72 acesso o elemento pai desses botões que é uma section-class, acesso seu primeiro filho que é um span e por fim, acesso o texto dessa span que é o id (sku) do produto. 
-// linha 73 chamo a função addItemCard, passando como parâmetro o id do produto. Essa função é assíncrona, em razão da função fetchItem estar como assíncrona, ela precisa acontecer, depois que temos a resposta do fetchItem. Assim que a fetchItem é executada e retorna sua resposta com o id do produto, chamamos então a função creatCartItemElement, já com a resposta da fetchItem que são os produtos com os dados (id, title, price).
+// linha 73 chamo a função addItemCard, passando como parâmetro o id do produto. Essa função é assíncrona, em razão da função fetchItem estar como assíncrona, ela precisa acontecer, depois que temos a resposta do fetchItem. Assim que a fetchItem é executada e retorna sua resposta com o id do produto, chamamos então a função creatCartItemElement, já com a resposta da fetchItem que são os produtos com os dados (id, title, price)
 // linha 48, chamada a função createCartItemElement com o parâmetro dos dados dos produtos, desustruturamos esses dados, para poder utilizar na função. 
 // li são criadas e possuem como texto, os dados de cada produto (id,title,price).Seleciono a ol, e coloco todas as li's criadas como filhas de ol para que os dados do produto clicado, aparecem no carrinho (id,name, price).
