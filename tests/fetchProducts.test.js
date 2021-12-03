@@ -9,7 +9,8 @@ describe('1 - Teste a função fecthProducts', () => {
     expect(now).toBe(expected);
   });
 
-//   test('2 - Testa se a função fecthProducts é chamada com o argumento computador', () => {
- 
-//   });
+  // test('2 - Testa se a função fecthProducts é chamada com o argumento computador', () => {
+  //     //  fetchProducts('computador');
+  //     expect(fetch).toHaveBeenCalledWith('computador');
+  // });
 });
