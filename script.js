@@ -24,44 +24,42 @@ function createProductItemElement({ sku, name, image }) {
   section.appendChild(createCustomElement('span', 'item__title', name));
   section.appendChild(createProductImageElement(image));
   section.appendChild(
-    createCustomElement('button', 'item__add', 'Adicionar ao carrinho!')
+    createCustomElement('button', 'item__add', 'Adicionar ao carrinho!'),
   );
 
   return section;
 }
 
-function getSkuFromProductItem(item) {
-  // eslint-disable-next-line quotes
-  return item.querySelector('span.item__sku").innerText');
-}
+// function getSkuFromProductItem(item) {
+//   // eslint-disable-next-line quotes
+//   return item.querySelector('span.item__sku").innerText');
+// }
 
-function cartItemClickListener(event) {
-  // coloque seu código aqui
-}
+// function cartItemClickListener(event) {
+//   // coloque seu código aqui
+// }
 
-function createCartItemElement({ sku, name, salePrice }) {
-  const li = document.createElement('li');
-  li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
-  li.addEventListener('click', cartItemClickListener);
-  return li;
-}
+// function createCartItemElement({ sku, name, salePrice }) {
+//   const li = document.createElement('li');
+//   li.className = 'cart__item';
+//   li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+//   li.addEventListener('click', cartItemClickListener);
+//   return li;
+// }
 
 const appendElementToItems = (element) => {
   const pegandoSection = document.querySelector('.items');
   pegandoSection.appendChild(element);
-
-}
+};
 
 window.onload = async () => {
   const products = await fetchProducts();
   console.log(products);
 
-  const mapeandoAsInformacoes = products.results.map((currentValue) => {
-    return { sku: currentValue.id, name: currentValue.title, image: currentValue.thumbnail };
-  });
+  const mapeandoInfo = products.results.map((currentValue) => 
+  ({ sku: currentValue.id, name: currentValue.title, image: currentValue.thumbnail }));
 
-  mapeandoAsInformacoes.forEach((currentValue) => {
+  mapeandoInfo.forEach((currentValue) => {
     //  debugger;
     const resultado = createProductItemElement(currentValue);
 
