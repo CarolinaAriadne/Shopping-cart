@@ -1,3 +1,11 @@
+const criaBotaoLimpa = () => {
+  const buscarOl = document.querySelector('ol');
+  const pegandoBotaoLimpar = document.querySelector('.empty-cart');
+  pegandoBotaoLimpar.addEventListener('click', () => {
+    buscarOl.innerHTML = '';
+  });
+};
+
 function createProductImageElement(imageSource) {
   const img = document.createElement('img');
   img.className = 'item__image';
@@ -77,8 +85,9 @@ window.onload = async () => {
     appendElementToItems(resultado);
   });
   listenerButtons();
+  criaBotaoLimpa();
   // const chamandoOl = document.querySelector('ol');
-  // saveCartItems();
+  // saveCartItems(chamandoOl.innerHTML);
 };
  
 // REQUISITO 1: Chamando função fetchProducts, linha 57, que me traz o array de objetos API mercado livre. Ao carregar a página, espera a função fetchProducts terminar assincronamente, trazer os resultados que são as os produtos na tela. 
