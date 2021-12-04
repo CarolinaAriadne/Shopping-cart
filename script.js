@@ -45,8 +45,8 @@ function cartItemClickListener(event) {
 }
 
 function carregaAindaRomove() {
-const pegaOl = document.querySelectorAll('.cart__item');
-pegaOl.forEach((element) => {
+const pegalis = document.querySelectorAll('.cart__item');
+pegalis.forEach((element) => {
   element.addEventListener('click', cartItemClickListener);
 });
 }
@@ -114,3 +114,6 @@ window.onload = async () => {
 // REQUISITO 3: Romovendo itens do carrinho. Evento de clique no botão já feito linha 51.Depois do clique, função Linhas 42 a 44 é chamada, guardei meu elemento clicado, minha li no caso, e passei a função remove para minha li clicada, assim, removendo minha li clicada,  que possui um produto.
 
 // REQUISITO 6: Limpando todo o carrinho (ou seja, lis), ao clicar no botão esvaziar. Linhas 1 a 5. Selecionei minha ol pai das lis. Linhas 3 e 4 , adicionei evento de clique no botão esvaziar, assim que clicado, a função anônima é executada, ou seja, passo minha ol que está na variável, seleciono o que existe dentro dela com inner.html (o que existem são as lis), e reatribuo seu valor para vazio, ou seja, ao clicar no botão esvaziar, todas minhas lis filhas da ol, passam a não mais existir, porque a ol, passou a ter como valor, o valor vazio, sem nada. 
+
+// REQUISITO 4: Salva itens do carrinho no localStorage, recuperar os itens do carrinho quando a página é carregada, e após carregada, precisamos conseguir excluir o item do carrinho se quisermos. Linha 72, chamo minha função saveCartItemns, pois onde ela está sendo chamada, tudo já ocorreu, os elementos já estão na tela e caso clicado no produto, os produtos já terão sido apensados no carrinho. Meu parâmetro é o innerHtml da minha ol, ou seja, tudo que existe nela, as lis que são os produtos adicionados no carrinho. Assim, essas lis que estão como parâmetro da minha função que salva o item no locaStorage, faz de fato esse salvamento de forma que meus produtos aparecem no localStorage assim que aparecem no carrinho. Requisito 4 segunda parte: explicação sobre a remoção dos itens do localStorage (tirados do localStorage e colocados na página novamente, após carregamento de página): no arquivo getSavedCartItems.
+// Requisito 4 terceira parte: ao carregar minha página, meus produtos voltam pro carrinho, pq o histórico do localStorage é tirado de lá e setado no carrinho. Os itens sendo setados noc arrinho novamente após carregamento, ficam estáticos, sem poderem ser excluídos. Para que possam ser excluídos:  linha 47 a 50, seleciono todas minhas lis, passo um forEach nelas. Cada li recebe um evento de clique, assim que a li é clicada, a função cartItemClickListener é chamada, e essa função remove a li que é clicada. Desta forma, após o carregamento da página, com os produtos no carrinho vindos do localStorage, estes ainda podem ser removidos individualmente. 
