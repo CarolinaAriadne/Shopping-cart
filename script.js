@@ -44,6 +44,13 @@ function cartItemClickListener(event) {
   return elementoClicado.remove();
 }
 
+function carregaAindaRomove() {
+const pegaOl = document.querySelectorAll('.cart__item');
+pegaOl.forEach((element) => {
+  element.addEventListener('click', cartItemClickListener);
+});
+}
+
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
@@ -61,6 +68,8 @@ const appendElementToItems = (element) => {
 const addItemCard = async (id) => {
  const dados = await fetchItem(id);
   createCartItemElement(dados);
+  const selecionaOl = document.querySelector('ol');
+  saveCartItems(selecionaOl.innerHTML);
 };
 
 const listenerButtons = () => {
@@ -86,6 +95,8 @@ window.onload = async () => {
   });
   listenerButtons();
   criaBotaoLimpa();
+  getSavedCartItems();
+  carregaAindaRomove();
   // const chamandoOl = document.querySelector('ol');
   // saveCartItems(chamandoOl.innerHTML);
 };
