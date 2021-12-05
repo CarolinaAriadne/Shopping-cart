@@ -13,4 +13,4 @@ describe('4 - Teste a função saveCartItems', () => {
     expect(localStorage.setItem).toHaveBeenCalledWith('cartItems','<ol><li>Item</li></ol');
   });
 
-});
+}); 
