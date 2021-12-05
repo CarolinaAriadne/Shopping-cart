@@ -97,9 +97,7 @@ window.onload = async () => {
   criaBotaoLimpa();
   getSavedCartItems();
   carregaAindaRomove();
-  // const chamandoOl = document.querySelector('ol');
-  // saveCartItems(chamandoOl.innerHTML);
-};
+  };
  
 // REQUISITO 1: Chamando função fetchProducts, linha 57, que me traz o array de objetos API mercado livre. Ao carregar a página, espera a função fetchProducts terminar assincronamente, trazer os resultados que são as os produtos na tela. 
 // na linha  82 mapeio meus produtos, e crio um objeto para cada, contendo só as informações que desejo.
