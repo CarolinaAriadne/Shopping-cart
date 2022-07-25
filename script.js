@@ -1,8 +1,22 @@
+const somaValoresItens = (valorProduto) => {
+  let buscaValorAtual = parseFloat(localStorage.getItem('precoTotal'));
+  if (Number.isNaN(buscaValorAtual) || buscaValorAtual === undefined || buscaValorAtual == null) { 
+     buscaValorAtual = 0;
+    }
+   const soma = (buscaValorAtual + valorProduto).toFixed(2); 
+   const seleciondoSectionPrice = document.querySelector('.total-price');
+   seleciondoSectionPrice.innerHTML = soma;
+   localStorage.setItem('precoTotal', soma);
+};
+
 const criaBotaoLimpa = () => {
-  const buscarOl = document.querySelector('ol');
+ const buscarOl = document.querySelector('ol');
   const pegandoBotaoLimpar = document.querySelector('.empty-cart');
   pegandoBotaoLimpar.addEventListener('click', () => {
     buscarOl.innerHTML = '';
+    localStorage.setItem('cartItems', '');
+    localStorage.setItem('precoTotal', 0);
+    somaValoresItens(0);
   });
 };
 
@@ -39,9 +53,27 @@ function createProductItemElement({ sku, name, image }) {
 //   return item.querySelector('span.item__sku").innerText');
 // }
 
+const subtraiValoresItens = (valorProduto) => {
+  let buscaValorAtual = parseFloat(localStorage.getItem('precoTotal'));
+  if (Number.isNaN(buscaValorAtual) || buscaValorAtual === undefined || buscaValorAtual == null) { 
+     buscaValorAtual = 0;
+    }
+
+  const subtracao = (buscaValorAtual - valorProduto).toFixed(2); 
+
+   const seleciondoSectionPrice = document.querySelector('.total-price');
+   seleciondoSectionPrice.innerHTML = subtracao;
+   localStorage.setItem('precoTotal', subtracao);
+};
+
 function cartItemClickListener(event) {
-  const elementoClicado = event.target; 
-  return elementoClicado.remove();
+  const elementoClicado = event.target;
+  const precoComoString = elementoClicado.firstElementChild.innerText;
+  const price = parseFloat(precoComoString);
+  subtraiValoresItens(price);
+  elementoClicado.remove();
+  const selecionaOl = document.querySelector('ol');
+  saveCartItems(selecionaOl.innerHTML);
 }
 
 function carregaAindaRomove() {
@@ -54,7 +86,7 @@ pegalis.forEach((element) => {
 function createCartItemElement({ id: sku, title: name, price: salePrice }) {
   const li = document.createElement('li');
   li.className = 'cart__item';
-  li.innerText = `SKU: ${sku} | NAME: ${name} | PRICE: $${salePrice}`;
+  li.innerHTML = `SKU: ${sku} | NAME: ${name} | PRICE: $<span class='price'>${salePrice}</span>`;
   li.addEventListener('click', cartItemClickListener);
   const selecionandoOl = document.querySelector('ol');
   selecionandoOl.appendChild(li);
@@ -66,31 +98,31 @@ const appendElementToItems = (element) => {
 };
 
 const addItemCard = async (id) => {
- const dados = await fetchItem(id);
-  createCartItemElement(dados);
+  const dados = await fetchItem(id);
+  somaValoresItens(dados.price);
+ createCartItemElement(dados);
   const selecionaOl = document.querySelector('ol');
   saveCartItems(selecionaOl.innerHTML);
 };
 
 const listenerButtons = () => {
   const selecionandoButton = document.querySelectorAll('.item__add');
-  
-   selecionandoButton.forEach((button) => button.addEventListener('click', (event) => {
+    selecionandoButton.forEach((button) => button.addEventListener('click', (event) => {
         const buttonClicado = event.target;
        const id = buttonClicado.parentElement.firstChild.innerText;
        addItemCard(id);
-   }));
+     }));
   };
 
 window.onload = async () => {
+  const buscarLoading = document.querySelector('.loading');
   const products = await fetchProducts('computador');
-
+  buscarLoading.remove();
   const mapeandoInfo = products.results.map((currentValue) => 
   ({ sku: currentValue.id, name: currentValue.title, image: currentValue.thumbnail }));
 
   mapeandoInfo.forEach((currentValue) => {
     const resultado = createProductItemElement(currentValue);
-
     appendElementToItems(resultado);
   });
   listenerButtons();
@@ -98,6 +130,7 @@ window.onload = async () => {
   const getItens = localStorage.getItem('cartItems');
   const selecionandoOl = document.querySelector('ol');
   selecionandoOl.innerHTML = getItens;
+  somaValoresItens(0);
   carregaAindaRomove();
   };
  
@@ -118,3 +151,5 @@ window.onload = async () => {
 // REQUISITO 4: Salva itens do carrinho no localStorage, recuperar os itens do carrinho quando a página é carregada, e após carregada, precisamos conseguir excluir o item do carrinho se quisermos. Linha 72, chamo minha função saveCartItemns, pois onde ela está sendo chamada, tudo já ocorreu, os elementos já estão na tela e caso clicado no produto, os produtos já terão sido apensados no carrinho. Meu parâmetro é o innerHtml da minha ol, ou seja, tudo que existe nela, as lis que são os produtos adicionados no carrinho. Assim, essas lis que estão como parâmetro da minha função que salva o item no locaStorage, faz de fato esse salvamento de forma que meus produtos aparecem no localStorage assim que aparecem no carrinho. 
 // Requisito 4 segunda parte: linhas 98 a 100 (remoção dos itens do localStorage (tirados do localStorage e colocados na página novamente, após carregamento de página):  getItem get de pegar, estou pegando minhas lis que foram para o localStorage na linha 2. Na linha 3, eu seleciono a minha ol (pai das lis). Na linha 4, eu pego minha ol (que após carregar a página ficaria vazia), e reatribuo o valor dela (ou seja innerHtml, valor) para que a ol receba as lis que estavam no localStorage, receba as lis que peguei do localStorage.Assim ao carregar a página, minhas meus produtos (lis) voltam pro carrinho, pq o que estava guardado no localStorage  (lis) são colocados no carrinho novamente. Função chamada no window.onload.
 // Requisito 4 terceira parte: ao carregar minha página, meus produtos voltam pro carrinho, pq o histórico do localStorage é tirado de lá e setado no carrinho. Os itens sendo setados noc arrinho novamente após carregamento, ficam estáticos, sem poderem ser excluídos. Para que possam ser excluídos:  linha 47 a 50, seleciono todas minhas lis, passo um forEach nelas. Cada li recebe um evento de clique, assim que a li é clicada, a função cartItemClickListener é chamada, e essa função remove a li que é clicada. Desta forma, após o carregamento da página, com os produtos no carrinho vindos do localStorage, estes ainda podem ser removidos individualmente. 
+
+// REQUISITO 7: criada tag p no html com o texto carregando. Enquanto a linha 119 não ocorre,ou seja, enquanto estamos aguardando a resposta da requisição da API, o texto carregando fica aparecendo na tela. Assim que a requisição é atendida e a resposta retorna, linha 120, ou seja, removo meu texto carregando da tela (que havia sido coletado pela classe na linha 118).
